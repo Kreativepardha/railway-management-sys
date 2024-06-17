@@ -12,8 +12,8 @@ export const Navbar = () => {
     return (
       <nav className={
         classNames
-        ("z-50 bg-background   fixed top-0 flex items-center w-full p-4",
-         scrolled && " shadow-sm shadow-yellow-400 dark:shadow-md-yellow-200"  )}>
+        ("z-50 bg-background   fixed top-0 flex items-center w-full p-4 border-b-2",
+         scrolled && " shadow-sm shadow-yellow-400 dark:shadow-md-yellow-200 border-0"  )}>
           <div className="flex justify-around font-semibold w-full">
             <Button size="lg" variant="ghost">      
                 Home

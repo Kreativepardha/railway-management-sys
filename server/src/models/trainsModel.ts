@@ -17,6 +17,10 @@ const TrainSchema = new mongoose.Schema({
             type:String,
             maxlength:100
         },
+        source: {
+            type: String,
+            maxlength: 100,
+          },
         startTime:{
             type: Date
         },
@@ -28,4 +32,7 @@ const TrainSchema = new mongoose.Schema({
         },
 })
 
-module.exports = mongoose.model("train", TrainSchema)
+
+const Train = mongoose.model("train", TrainSchema );
+
+export default Train;

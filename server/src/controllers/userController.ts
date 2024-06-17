@@ -3,6 +3,7 @@ import User from '../models/userModel';
 import crypto from 'crypto';
 import bcrypt from 'bcrypt';
 import dotenv from 'dotenv'
+import Balance from '../models/balanceModel';
 dotenv.config();
 
 
@@ -31,13 +32,20 @@ export const createUser = async(req: any,res: any) => {
             const hashedpassword = await bcrypt.hash(password, salt) 
         
             //creating new user
-         const newUser = new User({
-            name, email,
+         const newUser = await User.create({
+            name:req.body.name,
+            email:req.body.email,
             password:hashedpassword,
-            is_admin: is_admin ?? false,
+            is_admin: is_admin ?? false
+           
+         })
+         const userId = newUser._id;
+        const balance =  await Balance.create({
+            userId,
+            balance: 1 + Math.random()*1000
          }) 
          
-         await newUser.save()
+         
          
 
          const token = jwt.sign(  
@@ -51,6 +59,7 @@ export const createUser = async(req: any,res: any) => {
             name: newUser.name,
             id:newUser._id,
             is_admin: newUser.is_admin,
+            balance:balance.balance,
             token:token    
            }
     )
@@ -71,12 +80,14 @@ export const getUser = async (req:any,res:any) => {
             _id: id,
         })
         if(!existingUser) return res.json({msg:"User not available"});
+        const balance = await Balance.findOne({userId: id})
 
         return res.json({
             id: existingUser._id,
             email: existingUser.email,
             name: existingUser.name,
             is_admin:existingUser.is_admin,
+            balance: balance ? balance.balance : 0
         })
 }
  //get all users
@@ -86,6 +97,7 @@ export const getAllUsers = async (req:any,res:any)=>{
     .then((users) => {
         return res.status(200).json({
             users,
+            
         })
     })
     .catch((err) => res.json({ err }));

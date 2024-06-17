@@ -48,13 +48,26 @@ export const Login = ({type} : {type: "Signup" | "Login"}) => {
                 }
 
                 try {
-                    const response = await axios.post(`${BACKEND_URL}/api/user/`,{
-                            name,email,password
+
+                    const response = await axios.post(`${BACKEND_URL}/api/auth/login`,{
+                            email,password
                     });
-                    const jwt = response.data.token;
-                    const token = localStorage.setItem("token",JSON.stringify(jwt))
-                    console.log(token);   
-                    navigate('/dashboard')
+                   
+                    
+                    if(response.status === 200) {
+                        const {token} = response.data;
+                        // console.log(token);  
+                        
+                        if(token) {
+                            localStorage.setItem("token", JSON.stringify(token))
+                            navigate('/dashboard')
+                        } else {
+                            setError("Token not found in response");
+                        }
+                    } else {
+                        setError("An error occurred during login. Please try again.");
+                    }
+                   
             
                 } catch (err) {
                     console.error(err);

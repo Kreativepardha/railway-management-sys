@@ -4,7 +4,7 @@ import { Button } from "../ui/Button";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { BACKEND_URL } from "../../config";
-
+import { MdOutlineCancel } from "react-icons/md";
 
 
 
@@ -75,8 +75,6 @@ export const Signup = ({type} : {type: "Signup" | "Login"}) => {
         }
        
        
-        // navigate('/Login')
-       
     } catch (err) {
         console.error(err);
                         setError("An error occurred during registration. Please try again.");
@@ -84,8 +82,23 @@ export const Signup = ({type} : {type: "Signup" | "Login"}) => {
 
     }
 
+    const handleCloseMsg = () => {
+        setMsg("")
+    }
+
     return (<div>
-                    {msg && <p className="text-green-400 text-center mb-4 absolute right-48 top-28 border-2 border-gray-200 shadow-lg p-4 rounded-lg ">{msg}</p>}
+                    {
+                    msg
+                     && (
+                        <div className="absolute right-48 top-28 border-2 border-gray-200 shadow-lg p-4 rounded-lg flex justify-between items-center ">
+                      <p className="text-green-500 text-center  ">
+                        {msg}
+                        </p>
+                            <p  onClick={handleCloseMsg} className="text-red-500 mb-4 text-xs p-2 absolute top-0 right-0 ">
+                                <MdOutlineCancel     />
+                            </p>
+                        </div>
+                     ) }
         <div className="h-screen flex flex-col justify-center items-center">
             <h1  className="font-extrabold text-center w-80"   >Signup</h1>
             <form onSubmit={handleSubmit} className="flex flex-col gap-3 w-80 p-4 shadow-lg shadow-gray-">

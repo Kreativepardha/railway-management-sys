@@ -2,13 +2,13 @@ import classNames from "classnames"
 import useScrollTop from "../../hooks/use-scroll-top"
 
 import { Button } from "./Button";
+import { useLocation, useNavigate } from "react-router";
 
 
 export const Navbar = () => {
 
     const scrolled = useScrollTop();
- 
-
+   
     return (
       <nav className={
         classNames
@@ -23,14 +23,12 @@ export const Navbar = () => {
               </Button>
          
               <Button size="lg" >      
-                Trains
+                TrainsBook
               </Button>
               <Button size="lg" >      
                 Metro card  
               </Button>
-              <Button size="lg" variant="secondary" className="bg-black text-white text-primary-foreground h-11 rounded-md px-8   hover:bg-yellow-400"  >      
-              Login
-              </Button>
+                    
    
           </div>
       </nav>

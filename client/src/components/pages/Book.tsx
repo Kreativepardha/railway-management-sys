@@ -4,11 +4,11 @@
 
 
 
-export const MetroCard = () => {
+export const Book = () => {
 
     return (
         <div>
-           Metrocard 
+            tranins
         </div>
     )
 }
